@@ -1,21 +1,26 @@
 //        Dynamic Todo height
-const todoCard = document.querySelector('.todo-card');
+let todoCard = document.querySelector('.todo-card');
 let todoCardHeight = todoCard.getBoundingClientRect().height;
-
-const todoListArray = [];
+let todoListArray = [];
 
 const todoButton = document.querySelector('.todo-button');
-todoButton.addEventListener('click', function(e) {
+todoButton.addEventListener('click', function (e) {
   createTodoList();
 });
 
-
 const todo = document.querySelector('.todo');
 const todoListDiv = document.querySelector('.todo-list-div');
-const todoListLabel = document.querySelector('.todo-list-label');
 
-const createTodoList = () => {
-  // <label for="todo" class="todo-list-label">
+
+
+
+
+const createTodoList = (value) => {
+  // <label for= "todo" class= "todo-list-label" >
+  //   <input type="text" name="todo" class="todo-list" value="A">
+  //   <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
+  // </label> 
+
   const label = document.createElement('label');
   label.setAttribute('for', 'todo');
   label.classList.add('todo-list-label');
@@ -23,52 +28,72 @@ const createTodoList = () => {
   const input = document.createElement('input');
   input.classList.add('todo-list');
   input.cssText = `type: text; name: todo; class: todo-list; value: ${todo.value};`;
-  input.value = todo.value;
-  // todoListDiv.appendChild(todoList);
+  input.value = todo.value || value;
 
-  // <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon"></img>
   const img = document.createElement('img');
   img.src = "./assets/icons/close.svg";
   img.classList.add('close-icon');
   img.setAttribute('alt', 'Close icon');
-  
+
+  // Append elements
   label.appendChild(input);
   label.appendChild(img);
   todoListDiv.appendChild(label);
 
-  todoCardHeight = todoCardHeight + 40;
-  todoCard.style.height = `${todoCardHeight}px`;
   todoListArray.push(input.value);
-  // console.log(todoListArray)
+  localStorage.setItem('todoList', JSON.stringify(todoListArray));
 
-  // Close icon event listener  
-  
-  removeTodo();
+  updateTodoCardHeight('add');
+  // console.log(todoListArray)
   showCactusTodo();
 }    // end of createTodoList() function
 
 
-let closeIcon = document.getElementsByClassName('close-icon');
+// let closeIcon = document.getElementsByClassName('close-icon');
+const updateTodoCardHeight = (operator) => {
+  if (operator === 'add') {
+    todoCardHeight = todoCardHeight + 40;
+  } else {
+    todoCardHeight = todoCardHeight - 40;
+  }
+  todoCard.style.height = `${todoCardHeight}px`;
+}    // end of updateTodoCardHeight() function
+
 
 const showCactusTodo = () => {
   const cactusTodo = document.getElementById('cactus-todo');
-  if(todoListArray.length === 0) {
+  if (todoListArray.length === 0) {
     cactusTodo.style.display = 'block';
-  } else {  
+  } else {
     cactusTodo.style.display = 'none';
   }
 }    // end of showCactusTodo() function
 
-console.log(todoListArray);
-const removeTodo = () => {
-  closeIcon = Array.from(closeIcon)
 
-  closeIcon.map((icon) => {
-    icon.addEventListener('click', function(e) {
-      icon.parentElement.remove();
-      todoListArray = todoListArray.filter((todo) => todo !== icon.previousElementSibling.value);
-      // console.log(elmRemoved);
-      console.log(todoListArray)
-    })
+
+todoListDiv.addEventListener('click', function (e) {
+  if (e.target.classList.contains('close-icon')) {
+    e.target.parentElement.remove();
+    todoListArray = todoListArray.filter((todo) => todo !== e.target.previousElementSibling.value);
+    console.log(todoListArray)
+  }
+  updateTodoCardHeight('remove');
+  showCactusTodo();
+
+  localStorage.setItem('todoList', JSON.stringify(todoListArray));
+})
+
+
+todoListArray = JSON.parse(localStorage.getItem('todoList'));
+if (todoListArray) {
+  // todoListDiv.innerHTML = ""
+  todoListArray.forEach((todo) => {
+    createTodoList(todo);
   })
-}  // end of removeTodo() function
+  todoListArray = []
+} else {
+  todoListArray = [];
+}
+
+localStorage.clear()
+
