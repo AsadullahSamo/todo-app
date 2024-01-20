@@ -21,7 +21,7 @@ const createTodoList = (value) => {
   //   <input type="text" name="todo" class="todo-list" value="A">
   //   <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
   // </label> 
-  const inputValue = todo.value.trim();
+  const inputValue = String(todo.value).trim();
 
   const label = document.createElement('label');
   label.setAttribute('for', 'todo');
