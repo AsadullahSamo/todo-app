@@ -21,6 +21,7 @@ const createTodoList = (value) => {
   //   <input type="text" name="todo" class="todo-list" value="A">
   //   <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
   // </label> 
+  const inputValue = todo.value.trim();
 
   const label = document.createElement('label');
   label.setAttribute('for', 'todo');
@@ -29,7 +30,7 @@ const createTodoList = (value) => {
   const input = document.createElement('input');
   input.classList.add('todo-list');
   input.cssText = `type: text; name: todo; class: todo-list; value: ${todo.value};`;
-  input.value = todo.value || value;
+  input.value = inputValue || value;
 
   const img = document.createElement('img');
   img.src = "./assets/icons/close.svg";
