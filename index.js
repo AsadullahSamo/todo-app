@@ -55,22 +55,14 @@ const createTodoList = (value) => {
 
 // Update todo card height based on todo list length dynamically
 const updateTodoCardHeight = (operator) => {
-  if (operator === 'add') {
-    todoCardHeight = todoCardHeight + 40;
-  } else {
-    todoCardHeight = todoCardHeight - 40;
-  }
+  operator === "add" ? todoCardHeight+= 40 : todoCardHeight-= 40;
   todoCard.style.height = `${todoCardHeight}px`;
 }    // end of updateTodoCardHeight() function
 
 // Show cactus todo image when todo list is empty
 const showCactusTodo = () => {
   const cactusTodo = document.getElementById('cactus-todo');
-  if (todoListArray.length === 0) {
-    cactusTodo.style.display = 'block';
-  } else {
-    cactusTodo.style.display = 'none';
-  }
+  todoListArray.length === 0 ? cactusTodo.style.display = 'block' : cactusTodo.style.display = 'none';
 }    // end of showCactusTodo() function
 
 // Add remove functionality to todo list
