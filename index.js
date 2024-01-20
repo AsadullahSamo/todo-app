@@ -1,4 +1,3 @@
-//        Dynamic Todo height
 let todoCard = document.querySelector('.todo-card');
 let todoCardHeight = todoCard.getBoundingClientRect().height;
 let todoListArray = [];
@@ -45,7 +44,7 @@ const createTodoList = (value) => {
 
   todoListArray.push(input.value);
   todoListArray = [...new Set(todoListArray)];
-  console.log(todoListArray)
+
   if (value === undefined) {
     localStorage.setItem('todoList', JSON.stringify(todoListArray));
   }
@@ -79,7 +78,6 @@ todoListDiv.addEventListener('click', function (e) {
   if (e.target.classList.contains('close-icon')) {
     e.target.parentElement.remove();
     todoListArray = todoListArray.filter((todo) => todo !== e.target.previousElementSibling.value);
-    console.log(todoListArray)
   }
   updateTodoCardHeight('remove');
   showCactusTodo();
