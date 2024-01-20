@@ -40,13 +40,20 @@ const createTodoList = (value) => {
   label.appendChild(img);
   todoListDiv.appendChild(label);
 
+
   todoListArray.push(input.value);
-  localStorage.setItem('todoList', JSON.stringify(todoListArray));
+  console.log(todoListArray)
+  if (value === undefined) {
+    localStorage.setItem('todoList', JSON.stringify(todoListArray));
+  }
+
 
   updateTodoCardHeight('add');
   // console.log(todoListArray)
   showCactusTodo();
 }    // end of createTodoList() function
+
+console.log(todoListArray)
 
 
 // let closeIcon = document.getElementsByClassName('close-icon');
@@ -84,16 +91,17 @@ todoListDiv.addEventListener('click', function (e) {
 })
 
 
-todoListArray = JSON.parse(localStorage.getItem('todoList'));
-if (todoListArray) {
-  // todoListDiv.innerHTML = ""
-  todoListArray.forEach((todo) => {
-    createTodoList(todo);
-  })
-  todoListArray = []
-} else {
-  todoListArray = [];
+
+
+if (todoListArray.length === 0) {
+  todoListArray = JSON.parse(localStorage.getItem('todoList')) || [];
 }
 
-localStorage.clear()
+// Load todoListArray into the DOM
+if (todoListArray.length > 0) {
+  todoListArray.forEach((todo) => {
+    createTodoList(todo);
+  });
+}
 
+// localStorage.clear()
