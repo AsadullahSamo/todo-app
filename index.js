@@ -54,10 +54,7 @@ const createTodoList = (value) => {
   showCactusTodo();
 }    // end of createTodoList() function
 
-console.log(todoListArray)
-
-
-
+// Update todo card height based on todo list length dynamically
 const updateTodoCardHeight = (operator) => {
   if (operator === 'add') {
     todoCardHeight = todoCardHeight + 40;
@@ -67,7 +64,7 @@ const updateTodoCardHeight = (operator) => {
   todoCard.style.height = `${todoCardHeight}px`;
 }    // end of updateTodoCardHeight() function
 
-
+// Show cactus todo image when todo list is empty
 const showCactusTodo = () => {
   const cactusTodo = document.getElementById('cactus-todo');
   if (todoListArray.length === 0) {
@@ -77,8 +74,7 @@ const showCactusTodo = () => {
   }
 }    // end of showCactusTodo() function
 
-
-
+// Add remove functionality to todo list
 todoListDiv.addEventListener('click', function (e) {
   if (e.target.classList.contains('close-icon')) {
     e.target.parentElement.remove();
@@ -91,18 +87,10 @@ todoListDiv.addEventListener('click', function (e) {
   localStorage.setItem('todoList', JSON.stringify(todoListArray));
 })
 
-
-
-
-if (todoListArray.length === 0) {
-  todoListArray = JSON.parse(localStorage.getItem('todoList')) || [];
-}
-
-// Load todoListArray into the DOM
-if (todoListArray.length > 0) {
+//  Load todoListArray from localStorage on page load
+if (localStorage.length > 0) {
+  todoListArray = JSON.parse(localStorage.getItem('todoList'));
   todoListArray.forEach((todo) => {
     createTodoList(todo);
   });
 }
-
-// localStorage.clear()
