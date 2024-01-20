@@ -11,9 +11,11 @@ todoButton.addEventListener('click', function (e) {
 const todo = document.querySelector('.todo');
 const todoListDiv = document.querySelector('.todo-list-div');
 
-
-
-
+window.addEventListener('keyup', function (e) {
+  if (e.key === 'Enter') {
+    createTodoList();
+  }
+})
 
 const createTodoList = (value) => {
   // <label for= "todo" class= "todo-list-label" >
@@ -48,16 +50,14 @@ const createTodoList = (value) => {
     localStorage.setItem('todoList', JSON.stringify(todoListArray));
   }
 
-
   updateTodoCardHeight('add');
-  // console.log(todoListArray)
   showCactusTodo();
 }    // end of createTodoList() function
 
 console.log(todoListArray)
 
 
-// let closeIcon = document.getElementsByClassName('close-icon');
+
 const updateTodoCardHeight = (operator) => {
   if (operator === 'add') {
     todoCardHeight = todoCardHeight + 40;
