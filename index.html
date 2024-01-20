@@ -1,56 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <bds />
-    <link rel="stylesheet" href="index.css" />
-    <script src="index.js" defer></script>
-    <title>Todo App Project</title>
-  </head>
 
-  <body>
-    
-    <div class="bg">
-      <img src="./assets/images/mountain.jpg" alt="Mountain">
-      
+<head>
+  <bds />
+  <link rel="stylesheet" href="index.css" />
+  <script src="index.js" defer></script>
+  <title>Todo App Project</title>
+</head>
 
-      <div class="todo-mode">
-        <p>TODO </p>
-        <img src="./assets/icons/light-mode.svg" alt="Theme Mode" id="mode">
+<body>
+
+  <div class="bg">
+    <img src="./assets/images/mountain.jpg" alt="Mountain">
+
+
+    <div class="todo-mode">
+      <p>TODO </p>
+      <img src="./assets/icons/light-mode.svg" alt="Theme Mode" id="mode">
+    </div>
+
+
+    <div class="todo-card">
+
+      <label for="todo">
+        <input type="text" name="todo" class="todo" placeholder="Create a new todo">
+        <input type="submit" value="Add todo" class="todo-button">
+      </label>
+
+      <div class="todo-list-div">
+        <!-- <label for="todo" class="todo-list-label">
+          <input type="text" name="todo" class="todo-list" value="A">
+          <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
+        </label> -->
       </div>
 
-      
-      <div class="todo-card">
-        
-        <label for="todo">
-          <input type="text" name="todo" class="todo" placeholder="Create a new todo">
-          <input type="submit" value="Add todo" class="todo-button">
-        </label>
-        
-          <div class="todo-list-div">
-            <!-- <label for="todo" class="todo-list-label">
-              <input type="text" name="todo" class="todo-list" value="A">
-              <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
-            </label> -->
-          </div>
-        
-          <figure id="cactus-todo">
-            <img src="./assets/images/cactus.jpg" alt="Cactus todo image">
-            <figcaption id="cactus-todo-caption"> There are no todos </figcaption>
-          </figure>
-        </label>
-        
-      </div>
+      <figure id="cactus-todo">
+        <img src="./assets/images/cactus.jpg" alt="Cactus todo image">
+        <figcaption id="cactus-todo-caption"> There are no todos </figcaption>
+      </figure>
+      </label>
 
     </div>
 
-    
-    
+  </div>
 
 
-    <div class="footer">
-      
-      <!-- <span>Built with ❤️ by Asadullah Samo/ <a href="https://github.com/AsadullahSamo/"> My Github </a> </span> -->
-    </div>
-  </body>
+
+
+
+  <div class="footer">
+
+    <!-- <span>Built with ❤️ by Asadullah Samo/ <a href="https://github.com/AsadullahSamo/"> My Github </a> </span> -->
+  </div>
+</body>
 
 </html>
