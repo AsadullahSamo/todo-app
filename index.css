@@ -137,3 +137,29 @@ div.todo-list-div img:hover {
     background-color: rgb(133, 127, 127);
     transition: all 1s;
 }
+
+input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+    margin-left: 25px;
+    position: absolute;
+    margin-top: 15px;
+    border: 1px solid #4c4c4f;
+    accent-color: greenyellow;
+    background-color: #24273d;
+}
+input[type="checkbox"]:hover {
+    cursor: pointer;
+}
+.appearance {
+    appearance: default;
+}
+.hide-appearance {
+    appearance: none;
+}
+
+.line-through {
+    text-decoration: line-through;
+    text-decoration-color: red;
+    text-decoration-thickness: 2px;
+}
