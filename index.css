@@ -89,6 +89,24 @@ div.todo-card input[type="submit"]:hover {
     cursor: pointer;
     transition: all 1s;
 }
+div.todo-card input.todo-list:hover{
+    cursor: pointer;
+    transition: all 1s;
+    background-color: #37384c;
+}
+
+div.todo-card input[type="submit"] {
+    background-color: #93a9ff;
+    width: 20%;
+    height: 27px;
+    margin: -90px;
+}
+div.todo-card input[type="submit"]:hover {
+    background-color: #fff;
+    color: #93a9ff;
+    cursor: pointer;
+    transition: all 1s;
+}
 
 div.todo-card img {
     width: 120px;
@@ -120,31 +138,3 @@ div.todo-list-div img:hover {
     transition: all 1s;
 }
 
-input[type="checkbox"] {
-    position: absolute;
-    margin-top: 17px;
-    margin-left: 28px;
-    transform: scale(1.5);    
-    accent-color: greenyellow;
-    border: 1px solid rgb(87, 83, 83);
-    width: 13px;
-    height: 13px;
-}
-
-input[type="checkbox"]:hover {
-    cursor: pointer;
-}
-
-.line-through {
-    text-decoration: line-through;
-    text-decoration-color: #24273D;
-    text-decoration-thickness: 2px;
-}
-
-.hide-appearance {
-    appearance: none;
-}
-.appearance {
- appearance: auto;
- accent-color: greenyellow;   
-}

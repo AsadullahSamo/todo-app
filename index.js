@@ -54,8 +54,8 @@ const createTodoList = (value) => {
   todoListArray.push(input.value);
   todoListArray = [...new Set(todoListArray)];
 
-  checkedArray.set([`${input.value}`, false])
 
+  checkedArray.set([`${input.value}`, false])
 
   if (value === undefined) {
     localStorage.setItem('todoList', JSON.stringify(todoListArray));
@@ -106,4 +106,3 @@ if (localStorage.length > 0) {
   });
 }
 
-localStorage.clear()
