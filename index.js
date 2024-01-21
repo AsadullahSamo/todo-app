@@ -1,6 +1,7 @@
 let todoCard = document.querySelector('.todo-card');
 let todoCardHeight = todoCard.getBoundingClientRect().height;
 let todoListArray = [];
+let checkedArray = []
 
 const todoButton = document.querySelector('.todo-button');
 todoButton.addEventListener('click', function (e) {
@@ -18,6 +19,7 @@ window.addEventListener('keyup', function (e) {
 
 const createTodoList = (value) => {
   // <label for= "todo" class= "todo-list-label" >
+  //   <input type="checkbox" name="task-status" id="task-status"></input>
   //   <input type="text" name="todo" class="todo-list" value="A">
   //   <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
   // </label> 
@@ -26,6 +28,11 @@ const createTodoList = (value) => {
   const label = document.createElement('label');
   label.setAttribute('for', 'todo');
   label.classList.add('todo-list-label');
+
+  const checkbox = document.createElement('input');
+  checkbox.setAttribute('type', 'checkbox');
+  checkbox.setAttribute('name', 'task-status');
+  checkbox.className = "task-status hide-appearance"
 
   const input = document.createElement('input');
   input.classList.add('todo-list');
@@ -38,6 +45,7 @@ const createTodoList = (value) => {
   img.setAttribute('alt', 'Close icon');
 
   // Append elements
+  label.appendChild(checkbox);
   label.appendChild(input);
   label.appendChild(img);
   todoListDiv.appendChild(label);
@@ -45,9 +53,11 @@ const createTodoList = (value) => {
 
   todoListArray.push(input.value);
   todoListArray = [...new Set(todoListArray)];
+  checkedArray.push(false)
 
   if (value === undefined) {
     localStorage.setItem('todoList', JSON.stringify(todoListArray));
+    localStorage.setItem('checked', JSON.stringify(checkedArray))
   }
 
   updateTodoCardHeight('add');
@@ -56,7 +66,7 @@ const createTodoList = (value) => {
 
 // Update todo card height based on todo list length dynamically
 const updateTodoCardHeight = (operator) => {
-  operator === "add" ? todoCardHeight+= 40 : todoCardHeight-= 40;
+  operator === "add" ? todoCardHeight += 40 : todoCardHeight -= 40;
   todoCard.style.height = `${todoCardHeight}px`;
 }    // end of updateTodoCardHeight() function
 
@@ -76,6 +86,14 @@ todoListDiv.addEventListener('click', function (e) {
   showCactusTodo();
 
   localStorage.setItem('todoList', JSON.stringify(todoListArray));
+
+  if (e.target.classList.contains(`task-status`)) {
+    e.target.nextElementSibling.classList.toggle('line-through')
+    e.target.classList.toggle('appearance');
+    e.target.classList.toggle('hide-appearance');
+    checkedArray.get(`${e.target.nextElementSibling.value}`)
+    updateTodoCardHeight('add')
+  }
 })
 
 //  Load todoListArray from localStorage on page load
@@ -85,3 +103,5 @@ if (localStorage.length > 0) {
     createTodoList(todo);
   });
 }
+
+// localStorage.clear();
