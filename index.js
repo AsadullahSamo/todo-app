@@ -1,6 +1,7 @@
 let todoCard = document.querySelector('.todo-card');
 let todoCardHeight = todoCard.getBoundingClientRect().height;
 let todoListArray = [];
+let checkedArray = new Map([]);
 
 const todoButton = document.querySelector('.todo-button');
 todoButton.addEventListener('click', function (e) {
@@ -52,7 +53,6 @@ const createTodoList = (value) => {
 
   todoListArray.push(input.value);
   todoListArray = [...new Set(todoListArray)];
-  checkedArray.push(false)
 
 
   checkedArray.set([`${input.value}`, false])
@@ -106,5 +106,4 @@ if (localStorage.length > 0) {
   });
 }
 
-
-// localStorage.clear();
+// localStorage.clear()
