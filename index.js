@@ -59,16 +59,17 @@ const createTodoList = (value) => {
 
   todoListArray.push(input.value);
   todoListArray = [...new Set(todoListArray)];
+  checkedArray.push(false)
 
-  checkedMap.set(`${input.value}`, false)
+
+  checkedArray.set([`${input.value}`, false])
 
   if (value === undefined) {
     localStorage.setItem('todoList', JSON.stringify(todoListArray));
-    localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
+    localStorage.setItem('checked', JSON.stringify(checkedArray))
   }
 
   updateTodoCardHeight('add');
-  showTasksStatus()
   showCactusTodo();
 }    // end of createTodoList() function
 
@@ -84,45 +85,28 @@ const showCactusTodo = () => {
   todoListArray.length === 0 ? cactusTodo.style.display = 'block' : cactusTodo.style.display = 'none';
 }    // end of showCactusTodo() function
 
-const showTasksStatus = () => {
-  // let remainingTasksArray = checkedMap.filter
-  if (todoListArray.length === 0) {
-    totalTasks.innerText = 0;
-  } else {
-    totalTasks.innerText = todoListArray.length;
-  }
-}
-
-
 // Add remove functionality to todo list
 todoListDiv.addEventListener('click', function (e) {
   if (e.target.classList.contains('close-icon')) {
     e.target.parentElement.remove();
     todoListArray = todoListArray.filter((todo) => todo !== e.target.previousElementSibling.value);
-    updateTodoCardHeight('remove');
-    showTasksStatus()
-    showCactusTodo();
-
-    remainingTasks.innerText = document.querySelectorAll('.appearance').length
-    localStorage.setItem('todoList', JSON.stringify(todoListArray));
   }
+  updateTodoCardHeight('remove');
+  showCactusTodo();
+
+  remainingTasks.innerText = document.querySelectorAll('.appearance').length
+  localStorage.setItem('todoList', JSON.stringify(todoListArray));
+}
 
 
 
   if (e.target.classList.contains(`task-status`)) {
-    e.target.nextElementSibling.classList.toggle('line-through')
-    e.target.classList.toggle('appearance');
-    e.target.classList.toggle('hide-appearance');
-
-    checkedMap.set(`${e.target.nextElementSibling.value}`, true)
-    localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
-
-    if (e.target.classList.contains('appearance')) {
-      remainingTasks.innerText = Number(remainingTasks.innerText) + 1
-    } else {
-      remainingTasks.innerText = Number(remainingTasks.innerText) - 1
-    }
-  }
+  e.target.nextElementSibling.classList.toggle('line-through')
+  e.target.classList.toggle('appearance');
+  e.target.classList.toggle('hide-appearance');
+  checkedArray.get(`${e.target.nextElementSibling.value}`)
+  updateTodoCardHeight('add')
+}
 
 })
 
