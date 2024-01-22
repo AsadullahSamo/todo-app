@@ -46,7 +46,7 @@ div.bg div.todo-mode img#mode {
 
 div.todo-card {
     background-color: #24273d; 
-    height: 240px;
+    height: 280px;
     width: 400px;
     margin: auto;
     position: relative;
@@ -109,16 +109,21 @@ div.todo-card input[type="submit"]:hover {
 }
 
 div.todo-card img {
+    position: absolute;
     width: 120px;
     height: 120px;
-    margin: 10px 100px;
-    
+    margin: 0 100px;
+    margin-top: -140px;
+    margin-bottom: 10px;
+    /* float: right; */
+
 }
 
 #cactus-todo-caption {
     font-family: Kanit-Light;
     color: #fff;
     text-align: center;
+    margin-top: -70px;
 }
 
 div.todo-list-div img {
@@ -162,4 +167,11 @@ input[type="checkbox"]:hover {
     text-decoration: line-through;
     text-decoration-color: red;
     text-decoration-thickness: 2px;
+}
+
+div.todo-card p#tasks {
+    font-family: Kanit-Light;
+    color: white;
+    margin-top: 210px;
+    margin-left: 60%;
 }

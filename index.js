@@ -1,7 +1,14 @@
 let todoCard = document.querySelector('.todo-card');
 let todoCardHeight = todoCard.getBoundingClientRect().height;
 let todoListArray = [];
+let checkedArray = new Map([]);
 
+//  TASKS STATUS
+const tasks = document.getElementById('tasks')
+const remainingTasks = document.getElementById('remaining-tasks')
+const totalTasks = document.getElementById('total-tasks')
+
+//  TODO BUTTON
 const todoButton = document.querySelector('.todo-button');
 todoButton.addEventListener('click', function (e) {
   createTodoList();
@@ -52,23 +59,23 @@ const createTodoList = (value) => {
 
   todoListArray.push(input.value);
   todoListArray = [...new Set(todoListArray)];
-  checkedArray.push(false)
+  
 
-
-  checkedArray.set([`${input.value}`, false])
+  checkedArray.set(`${input.value}`, false)
 
   if (value === undefined) {
     localStorage.setItem('todoList', JSON.stringify(todoListArray));
-    localStorage.setItem('checked', JSON.stringify(checkedArray))
+    localStorage.setItem('checked', JSON.stringify(Array.from(checkedArray.entries())))
   }
 
   updateTodoCardHeight('add');
+  showTasksStatus('add')
   showCactusTodo();
 }    // end of createTodoList() function
 
 // Update todo card height based on todo list length dynamically
 const updateTodoCardHeight = (operator) => {
-  operator === "add" ? todoCardHeight += 40 : todoCardHeight -= 40;
+  operator === "add" ? todoCardHeight += 50 : todoCardHeight -= 50;
   todoCard.style.height = `${todoCardHeight}px`;
 }    // end of updateTodoCardHeight() function
 
@@ -78,6 +85,19 @@ const showCactusTodo = () => {
   todoListArray.length === 0 ? cactusTodo.style.display = 'block' : cactusTodo.style.display = 'none';
 }    // end of showCactusTodo() function
 
+const showTasksStatus = (operator) => {
+  
+  const checkedMap = new Map(JSON.parse(localStorage.getItem('checked')));
+  console.log(checkedMap.get('a'))
+
+  if(todoListArray.length === 0) {
+    totalTasks.innerText = 0;
+  } else {
+    totalTasks.innerText = todoListArray.length;
+  }
+}
+
+
 // Add remove functionality to todo list
 todoListDiv.addEventListener('click', function (e) {
   if (e.target.classList.contains('close-icon')) {
@@ -85,6 +105,7 @@ todoListDiv.addEventListener('click', function (e) {
     todoListArray = todoListArray.filter((todo) => todo !== e.target.previousElementSibling.value);
   }
   updateTodoCardHeight('remove');
+  showTasksStatus('subtract')
   showCactusTodo();
 
   localStorage.setItem('todoList', JSON.stringify(todoListArray));
@@ -95,6 +116,12 @@ todoListDiv.addEventListener('click', function (e) {
     e.target.classList.toggle('hide-appearance');
     checkedArray.get(`${e.target.nextElementSibling.value}`)
     updateTodoCardHeight('add')
+
+    if(e.target.classList.contains('appearance')) {
+      remainingTasks.innerText = Number(remainingTasks.innerText) + 1;
+    } else {
+      remainingTasks.innerText = Number(remainingTasks.innerText) - 1;
+    }
   }
 })
 
@@ -107,4 +134,4 @@ if (localStorage.length > 0) {
 }
 
 
-// localStorage.clear();
+// localStorage.clear()
