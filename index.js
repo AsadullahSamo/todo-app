@@ -1,8 +1,14 @@
 let todoCard = document.querySelector('.todo-card');
 let todoCardHeight = todoCard.getBoundingClientRect().height;
 let todoListArray = [];
-let checkedArray = new Map([]);
+let checkedMap = new Map([])
 
+//  TASKS STATUS
+const tasks = document.getElementById('tasks')
+const remainingTasks = document.getElementById('remaining-tasks')
+const totalTasks = document.getElementById('total-tasks')
+
+//  TODO BUTTON
 const todoButton = document.querySelector('.todo-button');
 todoButton.addEventListener('click', function (e) {
   createTodoList();
@@ -54,21 +60,21 @@ const createTodoList = (value) => {
   todoListArray.push(input.value);
   todoListArray = [...new Set(todoListArray)];
 
-
-  checkedArray.set([`${input.value}`, false])
+  checkedMap.set(`${input.value}`, false)
 
   if (value === undefined) {
     localStorage.setItem('todoList', JSON.stringify(todoListArray));
-    localStorage.setItem('checked', JSON.stringify(checkedArray))
+    localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
   }
 
   updateTodoCardHeight('add');
+  showTasksStatus()
   showCactusTodo();
 }    // end of createTodoList() function
 
 // Update todo card height based on todo list length dynamically
 const updateTodoCardHeight = (operator) => {
-  operator === "add" ? todoCardHeight += 40 : todoCardHeight -= 40;
+  operator === "add" ? todoCardHeight += 50 : todoCardHeight -= 50;
   todoCard.style.height = `${todoCardHeight}px`;
 }    // end of updateTodoCardHeight() function
 
@@ -78,24 +84,46 @@ const showCactusTodo = () => {
   todoListArray.length === 0 ? cactusTodo.style.display = 'block' : cactusTodo.style.display = 'none';
 }    // end of showCactusTodo() function
 
+const showTasksStatus = () => {
+  // let remainingTasksArray = checkedMap.filter
+  if (todoListArray.length === 0) {
+    totalTasks.innerText = 0;
+  } else {
+    totalTasks.innerText = todoListArray.length;
+  }
+}
+
+
 // Add remove functionality to todo list
 todoListDiv.addEventListener('click', function (e) {
   if (e.target.classList.contains('close-icon')) {
     e.target.parentElement.remove();
     todoListArray = todoListArray.filter((todo) => todo !== e.target.previousElementSibling.value);
-  }
-  updateTodoCardHeight('remove');
-  showCactusTodo();
+    updateTodoCardHeight('remove');
+    showTasksStatus()
+    showCactusTodo();
 
-  localStorage.setItem('todoList', JSON.stringify(todoListArray));
+    remainingTasks.innerText = document.querySelectorAll('.appearance').length
+    localStorage.setItem('todoList', JSON.stringify(todoListArray));
+  }
+
+
 
   if (e.target.classList.contains(`task-status`)) {
     e.target.nextElementSibling.classList.toggle('line-through')
     e.target.classList.toggle('appearance');
     e.target.classList.toggle('hide-appearance');
-    checkedArray.get(`${e.target.nextElementSibling.value}`)
-    updateTodoCardHeight('add')
+
+    checkedMap.set(`${e.target.nextElementSibling.value}`, true)
+    localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
+
+    if (e.target.classList.contains('appearance')) {
+      remainingTasks.innerText = Number(remainingTasks.innerText) + 1
+    } else {
+      remainingTasks.innerText = Number(remainingTasks.innerText) - 1
+    }
   }
+
 })
 
 //  Load todoListArray from localStorage on page load
@@ -105,5 +133,6 @@ if (localStorage.length > 0) {
     createTodoList(todo);
   });
 }
+
 
 // localStorage.clear()
