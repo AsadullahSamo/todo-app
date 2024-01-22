@@ -59,7 +59,8 @@ const createTodoList = (value) => {
 
   todoListArray.push(input.value);
   todoListArray = [...new Set(todoListArray)];
-  
+  checkedArray.push(false)
+
 
   checkedArray.set(`${input.value}`, false)
 
@@ -132,6 +133,5 @@ if (localStorage.length > 0) {
     createTodoList(todo);
   });
 }
-
 
 // localStorage.clear()
