@@ -29,7 +29,7 @@ const createTodoList = (value) => {
   //   <input type="text" name="todo" class="todo-list" value="A">
   //   <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
   // </label> 
-  const inputValue = String(todo.value).trim();
+  let inputValue = String(todo.value).trim();
 
   const label = document.createElement('label');
   label.setAttribute('for', 'todo');
@@ -87,9 +87,9 @@ const showCactusTodo = () => {
 const showTasksStatus = () => {
   // let remainingTasksArray = checkedMap.filter
   if (todoListArray.length === 0) {
-    totalTasks.innerText = 0;
+    totalTasks.textContent = 0;
   } else {
-    totalTasks.innerText = todoListArray.length;
+    totalTasks.textContent = todoListArray.length;
   }
 }
 
@@ -103,7 +103,7 @@ todoListDiv.addEventListener('click', function (e) {
     showTasksStatus()
     showCactusTodo();
 
-    remainingTasks.innerText = document.querySelectorAll('.appearance').length
+    remainingTasks.textContent = document.querySelectorAll('.appearance').length
     localStorage.setItem('todoList', JSON.stringify(todoListArray));
   }
 
@@ -118,9 +118,9 @@ todoListDiv.addEventListener('click', function (e) {
     localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
 
     if (e.target.classList.contains('appearance')) {
-      remainingTasks.innerText = Number(remainingTasks.innerText) + 1
+      remainingTasks.textContent = Number(remainingTasks.textContent) + 1
     } else {
-      remainingTasks.innerText = Number(remainingTasks.innerText) - 1
+      remainingTasks.textContent = Number(remainingTasks.textContent) - 1
     }
   }
 
