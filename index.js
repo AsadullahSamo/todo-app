@@ -1,5 +1,3 @@
-import  { addEventListeners} from './eventListeners.js';
-
 let todoCard = document.querySelector('.todo-card');
 let todoCardHeight = todoCard.getBoundingClientRect().height;
 let todoListArray = [];
@@ -14,16 +12,20 @@ const inputTodoList = document.querySelector('.todo-card label input.todo');
 
 //  TODO BUTTON
 const todoButton = document.querySelector('.todo-button');
-todoButton.addEventListener('click', function (e) {
-  createTodoList();
+todoButton.addEventListener('click', function () {
+  if(todo.value.length > 0) {
+    createTodoList();
+  }
 });
 
 const todo = document.querySelector('.todo');
 const todoListDiv = document.querySelector('.todo-list-div');
 
 window.addEventListener('keyup', function (e) {
-  if (e.key === 'Enter') {
-    createTodoList();
+  if(todo.value.length > 0) {
+    if (e.key === 'Enter') {
+      createTodoList();
+    }
   }
 })
 
@@ -34,6 +36,7 @@ const createTodoList = (value) => {
   //   <input type="text" name="todo" class="todo-list" value="A">
   //   <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
   // </label> 
+  
   let inputValue = String(todo.value).trim();
 
   const label = document.createElement('label');
@@ -79,13 +82,14 @@ const createTodoList = (value) => {
     todoListDiv.appendChild(label);
   }
 
-
   todoListArray.push(input.value);
   todoListArray = [...new Set(todoListArray)];
-  checkedArray.push(false)
 
-
-  checkedArray.set(`${input.value}`, false)
+  if(map.get(`${value}`)) {
+    checkedMap.set(`${input.value}`, true)
+  } else {
+    checkedMap.set(`${input.value}`, false)
+  }
 
   if (value === undefined) {
     localStorage.setItem('todoList', JSON.stringify(todoListArray));
@@ -109,21 +113,14 @@ const showCactusTodo = () => {
   todoListArray.length === 0 ? cactusTodo.style.display = 'block' : cactusTodo.style.display = 'none';
 }    // end of showCactusTodo() function
 
-const showTasksStatus = (operator) => {
-  
-  const checkedMap = new Map(JSON.parse(localStorage.getItem('checked')));
-  console.log(checkedMap.get('a'))
-
-  if(todoListArray.length === 0) {
-    totalTasks.innerText = 0;
-  } else {
-    totalTasks.innerText = todoListArray.length;
-  }
+const showTasksStatus = () => {
+  totalTasks.textContent = todoListArray.length;
 }
 
 
 // Add remove functionality to todo list
 todoListDiv.addEventListener('click', function (e) {
+  // Remove todo list
   if (e.target.classList.contains('close-icon')) {
     e.target.parentElement.remove();
     todoListArray = todoListArray.filter((todo) => todo !== e.target.previousElementSibling.value);
@@ -131,24 +128,58 @@ todoListDiv.addEventListener('click', function (e) {
     showTasksStatus()
     showCactusTodo();
 
+    remainingTasks.textContent = document.querySelectorAll('.appearance').length
     localStorage.setItem('todoList', JSON.stringify(todoListArray));
+
+    checkedMap.delete(`${e.target.previousElementSibling.value}`)
+    localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
   }
 
+  // Complete/Incomplete task
   if (e.target.classList.contains(`task-status`)) {
     e.target.nextElementSibling.classList.toggle('line-through')
     e.target.classList.toggle('appearance');
     e.target.classList.toggle('hide-appearance');
-    checkedArray.get(`${e.target.nextElementSibling.value}`)
-    updateTodoCardHeight('add')
 
     if(e.target.classList.contains('appearance')) {
-      remainingTasks.innerText = Number(remainingTasks.innerText) + 1;
+      checkedMap.set(`${e.target.nextElementSibling.value}`, true)
+      remainingTasks.textContent = Number(remainingTasks.textContent) + 1
     } else {
+      checkedMap.set(`${e.target.nextElementSibling.value}`, false)
       remainingTasks.textContent = Number(remainingTasks.textContent) - 1
     }
+
+    localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
   }
 
 })
+
+// Light/Dark mode
+todoModeImg.addEventListener('click', function (e) {
+  if (todoModeImg.src.includes('light-mode')) {
+    changeTodoMode('./assets/icons/dark-mode.svg', '#000', '#fff', '#000', 'none')
+  } else {
+    changeTodoMode('./assets/icons/light-mode.svg', '#fff', '#24273D', '#fff', 'block')
+  }
+})   // end of todoModeImg event listener
+
+const changeTodoMode = (modeImg, color, bgColor, borderColor, showCactusTodo) => {
+  todoCard.style.backgroundColor = bgColor;
+  todo.style.cssText = `border: 1px solid ${borderColor}; color: ${color};`;
+  tasks.style.cssText = `color: ${color};`
+  todoModeImg.src = modeImg;
+
+  let todoList = Array.from(document.getElementsByClassName('todo-list'))
+  todoList.forEach((todo) => {
+    todo.style.cssText = `border: 1px solid ${borderColor}; color: ${color};`;
+  });
+
+  const cactusTodo = document.getElementById('cactus-todo');
+  cactusTodo.style.display = `${showCactusTodo}`
+
+  const cactusTodoCaption = document.getElementById('cactus-todo-caption');
+  cactusTodoCaption.style.color = `${color}`
+}   // end of changeTodoMode() function
 
 //  Load todoListArray from localStorage on page load
 if (localStorage.length > 0) {
@@ -156,6 +187,5 @@ if (localStorage.length > 0) {
   todoListArray.forEach((todo) => {
     createTodoList(todo);
   });
+  remainingTasks.textContent = document.querySelectorAll('.appearance').length
 }
-
-// localStorage.clear()
