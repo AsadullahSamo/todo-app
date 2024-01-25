@@ -43,6 +43,9 @@ div.bg div.todo-mode img#mode {
     z-index: 1;
     position: absolute;
 }
+div.bg div.todo-mode img#mode:hover {
+    cursor: pointer;
+}
 
 div.todo-card {
     background-color: #24273d; 
@@ -180,3 +183,4 @@ div.todo-card p#tasks {
     margin-top: 210px;
     margin-left: 60%;
 }
+
