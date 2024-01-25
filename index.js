@@ -33,7 +33,7 @@ const map = new Map(JSON.parse(localStorage.getItem('checked')))
 const createTodoList = (value) => {
   // <label for= "todo" class= "todo-list-label" >
   //   <input type="checkbox" name="task-status" id="task-status"></input>
-  //   <input type="text" name="todo" class="todo-list" value="A">
+  //   <input type="text" name="todo" class="todo-list" value="A" disabled>
   //   <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
   // </label> 
   
@@ -59,6 +59,8 @@ const createTodoList = (value) => {
   input.classList.add('todo-list');
   input.setAttribute('type', 'text');
   input.setAttribute('name', 'todo');
+  input.setAttribute('disabled', 'true')
+
   if(todoModeImg.src.includes('light-mode')) {
     input.setAttribute('style', 'border: 1px solid #fff; color: #fff');
   } else {
