@@ -131,7 +131,8 @@ todoListDiv.addEventListener('click', function (e) {
     showTasksStatus()
     showCactusTodo();
 
-  localStorage.setItem('todoList', JSON.stringify(todoListArray));
+    localStorage.setItem('todoList', JSON.stringify(todoListArray));
+  }
 
   if (e.target.classList.contains(`task-status`)) {
     e.target.nextElementSibling.classList.toggle('line-through')
