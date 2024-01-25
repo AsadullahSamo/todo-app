@@ -82,12 +82,10 @@ const createTodoList = (value) => {
 
   todoListArray.push(input.value);
   todoListArray = [...new Set(todoListArray)];
+  checkedArray.push(false)
 
-  if(map.get(`${value}`)) {
-    checkedMap.set(`${input.value}`, true)
-  } else {
-    checkedMap.set(`${input.value}`, false)
-  }
+
+  checkedArray.set(`${input.value}`, false)
 
   if (value === undefined) {
     localStorage.setItem('todoList', JSON.stringify(todoListArray));
@@ -111,8 +109,16 @@ const showCactusTodo = () => {
   todoListArray.length === 0 ? cactusTodo.style.display = 'block' : cactusTodo.style.display = 'none';
 }    // end of showCactusTodo() function
 
-const showTasksStatus = () => {
-  totalTasks.textContent = todoListArray.length;
+const showTasksStatus = (operator) => {
+  
+  const checkedMap = new Map(JSON.parse(localStorage.getItem('checked')));
+  console.log(checkedMap.get('a'))
+
+  if(todoListArray.length === 0) {
+    totalTasks.innerText = 0;
+  } else {
+    totalTasks.innerText = todoListArray.length;
+  }
 }
 
 
@@ -125,30 +131,17 @@ todoListDiv.addEventListener('click', function (e) {
     showTasksStatus()
     showCactusTodo();
 
-    remainingTasks.textContent = document.querySelectorAll('.appearance').length
-    localStorage.setItem('todoList', JSON.stringify(todoListArray));
-
-    checkedMap.delete(`${e.target.previousElementSibling.value}`)
-    localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
-  }
-
-
+  localStorage.setItem('todoList', JSON.stringify(todoListArray));
 
   if (e.target.classList.contains(`task-status`)) {
     e.target.nextElementSibling.classList.toggle('line-through')
     e.target.classList.toggle('appearance');
     e.target.classList.toggle('hide-appearance');
+    checkedArray.get(`${e.target.nextElementSibling.value}`)
+    updateTodoCardHeight('add')
 
     if(e.target.classList.contains('appearance')) {
-      checkedMap.set(`${e.target.nextElementSibling.value}`, true)
-    } else {
-      checkedMap.set(`${e.target.nextElementSibling.value}`, false)
-    }
-
-    localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
-
-    if (e.target.classList.contains('appearance')) {
-      remainingTasks.textContent = Number(remainingTasks.textContent) + 1
+      remainingTasks.innerText = Number(remainingTasks.innerText) + 1;
     } else {
       remainingTasks.textContent = Number(remainingTasks.textContent) - 1
     }
@@ -162,40 +155,6 @@ if (localStorage.length > 0) {
   todoListArray.forEach((todo) => {
     createTodoList(todo);
   });
-  remainingTasks.textContent = document.querySelectorAll('.appearance').length
 }
 
-todoModeImg.addEventListener('click', function (e) {
-  if (todoModeImg.src.includes('light-mode')) {
-    changeTodoMode('./assets/icons/dark-mode.svg', '#000', '#fff', '#000', 'none')
-  } else {
-    changeTodoMode('./assets/icons/light-mode.svg', '#fff', '#24273D', '#fff', 'block')
-  }
-})
-
-let todoList = Array.from(document.getElementsByClassName('todo-list'))
-todoList.forEach((todo) => {
-  todo.addEventListener('click', function (e) {
-    console.log(e.target.value)
-  })
-})
-
-const changeTodoMode = (modeImg, color, bgColor, borderColor, showCactusTodo) => {
-  todoCard.style.backgroundColor = bgColor;
-  todo.style.cssText = `border: 1px solid ${borderColor}; color: ${color};`;
-  tasks.style.cssText = `color: ${color};`
-  todoModeImg.src = modeImg;
-  todoList.forEach((todo) => {
-    todo.style.cssText = `border: 1px solid ${borderColor}; color: ${color};`;
-  });
-
-  const cactusTodo = document.getElementById('cactus-todo');
-  cactusTodo.style.display = `${showCactusTodo}`
-
-  const cactusTodoCaption = document.getElementById('cactus-todo-caption');
-  cactusTodoCaption.style.color = `${color}`
-}
-
-
-// console.log(map.get('a'))
 // localStorage.clear()
