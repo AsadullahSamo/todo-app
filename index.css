@@ -118,8 +118,6 @@ div.todo-card img {
     margin: 0 100px;
     margin-top: -140px;
     margin-bottom: 10px;
-    /* float: right; */
-
 }
 
 #cactus-todo-caption {
@@ -184,3 +182,6 @@ div.todo-card p#tasks {
     margin-left: 60%;
 }
 
+div.todo-list-div img.pencil-icon {
+    margin-right: 50px;
+}
