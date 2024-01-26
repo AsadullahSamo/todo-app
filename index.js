@@ -181,7 +181,6 @@ todoListDiv.addEventListener('click', function (e) {
 
   // Complete/Incomplete task
   if (e.target.classList.contains(`task-status`)) {
-    e.target.nextElementSibling.classList.toggle('line-through')
     e.target.classList.toggle('appearance');
     e.target.classList.toggle('hide-appearance');
 
