@@ -164,12 +164,6 @@ input[type="checkbox"]:hover {
     appearance: none;
 }
 
-.line-through {
-    text-decoration: line-through;
-    text-decoration-color: red;
-    text-decoration-thickness: 2px;
-}
-
 div.todo-card p#tasks {
     font-family: Kanit-Light;
     color: white;
