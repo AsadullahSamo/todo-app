@@ -9,6 +9,8 @@ const remainingTasks = document.getElementById('remaining-tasks')
 const totalTasks = document.getElementById('total-tasks')
 const todoModeImg = document.getElementById('mode');
 const inputTodoList = document.querySelector('.todo-card label input.todo');
+const todoModeImg = document.getElementById('mode');
+const inputTodoList = document.querySelector('.todo-card label input.todo');
 
 //  TODO BUTTON
 const todoButton = document.querySelector('.todo-button');
@@ -56,9 +58,11 @@ const createTodoList = (value) => {
   }
   // <label for= "todo" class= "todo-list-label" >
   //   <input type="checkbox" name="task-status" id="task-status" disabled></input>
+  //   <input type="checkbox" name="task-status" id="task-status" disabled></input>
   //   <input type="text" name="todo" class="todo-list" value="A">
   //   <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
   // </label> 
+
 
   let inputValue = String(todo.value).trim();
 
@@ -69,6 +73,14 @@ const createTodoList = (value) => {
   const checkbox = document.createElement('input');
   checkbox.setAttribute('type', 'checkbox');
   checkbox.setAttribute('name', 'task-status');
+  checkbox.className = "task-status"
+
+  if (map.get(`${value}`)) {
+    checkbox.className += " appearance"
+    checkbox.setAttribute('checked', 'true')
+  } else {
+    checkbox.className += " hide-appearance"
+  }
   checkbox.className = "task-status"
 
   if (map.get(`${value}`)) {
@@ -91,6 +103,15 @@ const createTodoList = (value) => {
   }
   input.value = inputValue || value;
 
+  const pencilImg = document.createElement('img');
+  pencilImg.src = "./assets/icons/pencil.svg";
+  pencilImg.classList.add('pencil-icon');
+  pencilImg.setAttribute('alt', 'Pencil icon');
+
+  const closeImg = document.createElement('img');
+  closeImg.src = "./assets/icons/close.svg";
+  closeImg.classList.add('close-icon');
+  closeImg.setAttribute('alt', 'Close icon');
   const pencilImg = document.createElement('img');
   pencilImg.src = "./assets/icons/pencil.svg";
   pencilImg.classList.add('pencil-icon');
@@ -125,6 +146,7 @@ const createTodoList = (value) => {
 
   if (value === undefined) {
     updateLocalStorage();
+    updateLocalStorage();
   }
 
   updateTodoCardHeight('add');
@@ -155,12 +177,16 @@ const showCactusTodo = () => {
 const showTasksStatus = () => {
   totalTasks.textContent = todoListArray.length;
 }
+totalTasks.textContent = todoListArray.length;
+}
 
 // Add remove functionality to todo list
 todoListDiv.addEventListener('click', function (e) {
   // Remove todo list
+  // Remove todo list
   if (e.target.classList.contains('close-icon')) {
     e.target.parentElement.remove();
+    todoListArray = todoListArray.filter((todo) => todo !== e.target.previousElementSibling.previousElementSibling.value);
     todoListArray = todoListArray.filter((todo) => todo !== e.target.previousElementSibling.previousElementSibling.value);
     updateTodoCardHeight('remove');
     showTasksStatus()
@@ -223,6 +249,7 @@ todoListDiv.addEventListener('click', function (e) {
       remainingTasks.textContent = Number(remainingTasks.textContent) + 1
     } else {
       checkedMap.set(`${e.target.nextElementSibling.value}`, false)
+      checkedMap.set(`${e.target.nextElementSibling.value}`, false)
       remainingTasks.textContent = Number(remainingTasks.textContent) - 1
     }
 
@@ -265,6 +292,13 @@ if (localStorage.length > 0) {
     createTodoList(todo);
   });
   remainingTasks.textContent = document.querySelectorAll('.appearance').length
+}
+
+function updateLocalStorage() {
+  localStorage.setItem('todoList', JSON.stringify(todoListArray));
+  localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
+}
+remainingTasks.textContent = document.querySelectorAll('.appearance').length
 }
 
 function updateLocalStorage() {

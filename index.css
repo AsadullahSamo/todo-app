@@ -46,6 +46,9 @@ div.bg div.todo-mode img#mode {
 div.bg div.todo-mode img#mode:hover {
     cursor: pointer;
 }
+div.bg div.todo-mode img#mode:hover {
+    cursor: pointer;
+}
 
 div.todo-card {
     background-color: #24273d; 
@@ -119,8 +122,6 @@ div.todo-card img {
     margin-top: -140px;
     margin-bottom: 10px;
 }
-
-
 
 div.todo-list-div img {
     position: relative;
