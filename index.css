@@ -43,10 +43,13 @@ div.bg div.todo-mode img#mode {
     z-index: 1;
     position: absolute;
 }
+div.bg div.todo-mode img#mode:hover {
+    cursor: pointer;
+}
 
 div.todo-card {
     background-color: #24273d; 
-    height: 280px;
+    height: 320px;
     width: 400px;
     margin: auto;
     position: relative;
@@ -115,16 +118,9 @@ div.todo-card img {
     margin: 0 100px;
     margin-top: -140px;
     margin-bottom: 10px;
-    /* float: right; */
-
 }
 
-#cactus-todo-caption {
-    font-family: Kanit-Light;
-    color: #fff;
-    text-align: center;
-    margin-top: -70px;
-}
+
 
 div.todo-list-div img {
     position: relative;
@@ -137,7 +133,13 @@ div.todo-list-div img {
     background-color: transparent;
     margin-right: 20px;
 }
-div.todo-list-div img:hover {    
+div.todo-list-div img.close-icon:hover, div.todo-list-div img.pencil-icon:hover {    
+    cursor: pointer;
+    background-color: gainsboro;
+    transition: all 1s;
+}
+
+div.todo-list-div img.close-icon:hover {    
     cursor: pointer;
     background-color: rgb(133, 127, 127);
     transition: all 1s;
@@ -155,11 +157,6 @@ input[type="checkbox"] {
 input[type="checkbox"]:hover {
     cursor: pointer;
 }
-.line-through {
-    text-decoration: line-through;
-    text-decoration-color: red;
-    text-decoration-thickness: 2px;
-}
 
 .appearance {
     appearance: default;
@@ -168,15 +165,42 @@ input[type="checkbox"]:hover {
     appearance: none;
 }
 
-.line-through {
-    text-decoration: line-through;
-    text-decoration-color: red;
-    text-decoration-thickness: 2px;
+#cactus-todo, #cactus-todo-caption {
+    font-family: Kanit-Light;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    margin-top: 40px;
+}
+
+#cactus-todo-caption {
+    margin-left: 90px;
+    margin-top: 180px;
 }
 
 div.todo-card p#tasks {
     font-family: Kanit-Light;
     color: white;
-    margin-top: 210px;
-    margin-left: 60%;
+    position: absolute;
+    bottom: -15px;
+    right: 4px;
+}
+
+div.todo-list-div img.pencil-icon {
+    margin-right: 50px;
+}
+
+#empty-todo-msg {
+    font-family: Kanit-Regular;
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+    display: none;
+}
+
+.line-through {
+    text-decoration: line-through;
+    text-decoration-color: red;
+    text-decoration-thickness: 2px;
 }
