@@ -9,8 +9,6 @@ const remainingTasks = document.getElementById('remaining-tasks')
 const totalTasks = document.getElementById('total-tasks')
 const todoModeImg = document.getElementById('mode');
 const inputTodoList = document.querySelector('.todo-card label input.todo');
-const todoModeImg = document.getElementById('mode');
-const inputTodoList = document.querySelector('.todo-card label input.todo');
 
 //  TODO BUTTON
 const todoButton = document.querySelector('.todo-button');
@@ -112,15 +110,6 @@ const createTodoList = (value) => {
   closeImg.src = "./assets/icons/close.svg";
   closeImg.classList.add('close-icon');
   closeImg.setAttribute('alt', 'Close icon');
-  const pencilImg = document.createElement('img');
-  pencilImg.src = "./assets/icons/pencil.svg";
-  pencilImg.classList.add('pencil-icon');
-  pencilImg.setAttribute('alt', 'Pencil icon');
-
-  const closeImg = document.createElement('img');
-  closeImg.src = "./assets/icons/close.svg";
-  closeImg.classList.add('close-icon');
-  closeImg.setAttribute('alt', 'Close icon');
 
   // Append elements
   label.appendChild(checkbox);
@@ -177,8 +166,7 @@ const showCactusTodo = () => {
 const showTasksStatus = () => {
   totalTasks.textContent = todoListArray.length;
 }
-totalTasks.textContent = todoListArray.length;
-}
+
 
 // Add remove functionality to todo list
 todoListDiv.addEventListener('click', function (e) {
@@ -298,8 +286,7 @@ function updateLocalStorage() {
   localStorage.setItem('todoList', JSON.stringify(todoListArray));
   localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
 }
-remainingTasks.textContent = document.querySelectorAll('.appearance').length
-}
+
 
 function updateLocalStorage() {
   localStorage.setItem('todoList', JSON.stringify(todoListArray));
