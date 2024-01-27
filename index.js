@@ -194,6 +194,7 @@ todoListDiv.addEventListener('click', function (e) {
     inputField.removeAttribute('disabled');
     inputField.focus();
 
+
     inputField.addEventListener('keyup', function (e) {
       if (e.key === 'Enter') {
         handleEditTodoList(e)
@@ -208,6 +209,11 @@ todoListDiv.addEventListener('click', function (e) {
     const handleEditTodoList = (e) => {
       checkedMap.clear()
       inputField.setAttribute('disabled', 'true');
+      if (inputField.value === '') {
+        inputField.value = todoListArray[index]
+        inputField.blur()
+        return
+      }
 
       todoListArray.splice(index, 1, inputField.value);
       todoListArray = [...new Set(todoListArray)];
