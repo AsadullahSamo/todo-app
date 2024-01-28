@@ -119,9 +119,9 @@ const createTodoList = (value) => {
 
   if (checkbox.classList.contains('appearance')) {
     checkbox.nextElementSibling.classList.add('line-through')
-    todoListDiv.prepend(label);
-  } else {
     todoListDiv.appendChild(label);
+  } else {
+    todoListDiv.prepend(label);
   }
 
   todoListArray.push(input.value);
