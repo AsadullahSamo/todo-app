@@ -16,12 +16,6 @@ const todo = document.querySelector('.todo');
 const todoListDiv = document.querySelector('.todo-list-div');
 const emptyTodoMsg = document.getElementById('empty-todo-msg');
 
-const updateTodoButtonState = () => {
-
-}
-
-todo.addEventListener('input', updateTodoButtonState)
-
 todoButton.addEventListener('click', function () {
   if (todo.value.length > 0) {
     createTodoList();
@@ -135,7 +129,6 @@ const createTodoList = (value) => {
 
   if (value === undefined) {
     updateLocalStorage();
-    updateLocalStorage();
   }
 
   updateTodoCardHeight('add');
@@ -171,10 +164,8 @@ const showTasksStatus = () => {
 // Add remove functionality to todo list
 todoListDiv.addEventListener('click', function (e) {
   // Remove todo list
-  // Remove todo list
   if (e.target.classList.contains('close-icon')) {
     e.target.parentElement.remove();
-    todoListArray = todoListArray.filter((todo) => todo !== e.target.previousElementSibling.previousElementSibling.value);
     todoListArray = todoListArray.filter((todo) => todo !== e.target.previousElementSibling.previousElementSibling.value);
     updateTodoCardHeight('remove');
     showTasksStatus()
@@ -243,7 +234,6 @@ todoListDiv.addEventListener('click', function (e) {
       remainingTasks.textContent = Number(remainingTasks.textContent) + 1
     } else {
       checkedMap.set(`${e.target.nextElementSibling.value}`, false)
-      checkedMap.set(`${e.target.nextElementSibling.value}`, false)
       remainingTasks.textContent = Number(remainingTasks.textContent) - 1
     }
 
@@ -288,13 +278,7 @@ if (localStorage.length > 0) {
   remainingTasks.textContent = document.querySelectorAll('.appearance').length
 }
 
-function updateLocalStorage() {
-  localStorage.setItem('todoList', JSON.stringify(todoListArray));
-  localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
-}
-
-
-function updateLocalStorage() {
+const updateLocalStorage = () => {
   localStorage.setItem('todoList', JSON.stringify(todoListArray));
   localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
 }
