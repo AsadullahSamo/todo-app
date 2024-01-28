@@ -8,7 +8,6 @@ const tasks = document.getElementById('tasks')
 const remainingTasks = document.getElementById('remaining-tasks')
 const totalTasks = document.getElementById('total-tasks')
 const todoModeImg = document.getElementById('mode');
-const inputTodoList = document.querySelector('.todo-card label input.todo');
 
 //  TODO BUTTON
 const todoButton = document.querySelector('.todo-button');
