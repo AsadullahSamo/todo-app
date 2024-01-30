@@ -174,3 +174,9 @@ div.todo-card p#tasks {
 div.todo-list-div img.pencil-icon {
     margin-right: 50px;
 }
+
+@media screen and (max-width: 440px) {
+    div.todo-card {
+        width: 340px;
+    }
+}
