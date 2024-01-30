@@ -8,21 +8,26 @@ const tasks = document.getElementById('tasks')
 const remainingTasks = document.getElementById('remaining-tasks')
 const totalTasks = document.getElementById('total-tasks')
 const todoModeImg = document.getElementById('mode');
-const inputTodoList = document.querySelector('.todo-card label input.todo');
 
 //  TODO BUTTON
 const todoButton = document.querySelector('.todo-button');
+const todo = document.querySelector('.todo');
+const todoListDiv = document.querySelector('.todo-list-div');
+const emptyTodoMsg = document.getElementById('empty-todo-msg');
+
 todoButton.addEventListener('click', function () {
-  if(todo.value.length > 0) {
+  if (todo.value.length > 0) {
     createTodoList();
+  } else {
+    emptyTodoMsg.style.display = 'block'
+    setTimeout(() => {
+      emptyTodoMsg.style.display = 'none'
+    }, 1500)
   }
 });
 
-const todo = document.querySelector('.todo');
-const todoListDiv = document.querySelector('.todo-list-div');
-
 window.addEventListener('keyup', function (e) {
-  if(todo.value.length > 0) {
+  if (todo.value.length > 0) {
     if (e.key === 'Enter') {
       createTodoList();
     }
@@ -30,12 +35,25 @@ window.addEventListener('keyup', function (e) {
 })
 
 const map = new Map(JSON.parse(localStorage.getItem('checked')))
+const cactusTodoCaption = document.getElementById('cactus-todo-caption');
+
 const createTodoList = (value) => {
+  if (todoListArray.includes(todo.value)) {
+    emptyTodoMsg.style.display = 'block'
+    emptyTodoMsg.innerHTML = `${todo.value} already exists`
+    setTimeout(() => {
+      emptyTodoMsg.innerHTML = `Empty task can't be entered. Please enter a task`
+      emptyTodoMsg.style.display = 'none'
+    }, 1500)
+    return
+  }
   // <label for= "todo" class= "todo-list-label" >
+  //   <input type="checkbox" name="task-status" id="task-status" disabled></input>
   //   <input type="checkbox" name="task-status" id="task-status" disabled></input>
   //   <input type="text" name="todo" class="todo-list" value="A">
   //   <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
   // </label> 
+
 
   let inputValue = String(todo.value).trim();
 
@@ -54,6 +72,14 @@ const createTodoList = (value) => {
   } else {
     checkbox.className += " hide-appearance"
   }
+  checkbox.className = "task-status"
+
+  if (map.get(`${value}`)) {
+    checkbox.className += " appearance"
+    checkbox.setAttribute('checked', 'true')
+  } else {
+    checkbox.className += " hide-appearance"
+  }
 
   const input = document.createElement('input');
   input.classList.add('todo-list');
@@ -61,7 +87,7 @@ const createTodoList = (value) => {
   input.setAttribute('name', 'todo');
   input.setAttribute('disabled', 'true')
 
-  if(todoModeImg.src.includes('light-mode')) {
+  if (todoModeImg.src.includes('light-mode')) {
     input.setAttribute('style', 'border: 1px solid #fff; color: #fff');
   } else {
     input.setAttribute('style', 'border: 1px solid #000; color: #000');
@@ -83,17 +109,18 @@ const createTodoList = (value) => {
   label.appendChild(input);
   label.appendChild(pencilImg);
   label.appendChild(closeImg);
-  
+
   if (checkbox.classList.contains('appearance')) {
-    todoListDiv.prepend(label);
-  } else {
+    checkbox.nextElementSibling.classList.add('line-through')
     todoListDiv.appendChild(label);
+  } else {
+    todoListDiv.prepend(label);
   }
 
   todoListArray.push(input.value);
   todoListArray = [...new Set(todoListArray)];
 
-  if(map.get(`${value}`)) {
+  if (map.get(`${value}`)) {
     checkedMap.set(`${input.value}`, true)
   } else {
     checkedMap.set(`${input.value}`, false)
@@ -106,23 +133,32 @@ const createTodoList = (value) => {
   updateTodoCardHeight('add');
   showTasksStatus()
   showCactusTodo();
+  todo.value = '';   // Clear input field
 }    // end of createTodoList() function
 
 // Update todo card height based on todo list length dynamically
 const updateTodoCardHeight = (operator) => {
-  operator === "add" ? todoCardHeight += 50 : todoCardHeight -= 50;
+  operator === "add" ? todoCardHeight += 49 : todoCardHeight -= 49;
   todoCard.style.height = `${todoCardHeight}px`;
 }    // end of updateTodoCardHeight() function
 
 // Show cactus todo image when todo list is empty
 const showCactusTodo = () => {
   const cactusTodo = document.getElementById('cactus-todo');
-  todoListArray.length === 0 ? cactusTodo.style.display = 'block' : cactusTodo.style.display = 'none';
+  if (todoListArray.length === 0) {
+    cactusTodo.style.display = 'block'
+    cactusTodoCaption.style.display = 'block'
+  } else {
+    cactusTodo.style.display = 'none'
+    cactusTodoCaption.style.display = 'none'
+  }
+  // todoListArray.length === 0 ? cactusTodo.style.display = 'block' && cactusTodoCaption.style : cactusTodo.style.display = 'none';
 }    // end of showCactusTodo() function
 
 const showTasksStatus = () => {
   totalTasks.textContent = todoListArray.length;
 }
+
 
 // Add remove functionality to todo list
 todoListDiv.addEventListener('click', function (e) {
@@ -138,8 +174,8 @@ todoListDiv.addEventListener('click', function (e) {
     checkedMap.delete(`${e.target.previousElementSibling.previousElementSibling.value}`)
     updateLocalStorage();
   } // end of remove todo list
-  
-  if(e.target.classList.contains('pencil-icon')) {
+
+  if (e.target.classList.contains('pencil-icon')) {
     const checkedArray = Array.from(checkedMap.values())
     localStorage.removeItem('checked')
 
@@ -148,10 +184,11 @@ todoListDiv.addEventListener('click', function (e) {
     inputField.removeAttribute('disabled');
     inputField.focus();
 
+
     inputField.addEventListener('keyup', function (e) {
       if (e.key === 'Enter') {
         handleEditTodoList(e)
-        
+
       }
 
       inputField.addEventListener('blur', function (e) {
@@ -162,11 +199,17 @@ todoListDiv.addEventListener('click', function (e) {
     const handleEditTodoList = (e) => {
       checkedMap.clear()
       inputField.setAttribute('disabled', 'true');
+      if (inputField.value === '') {
+        inputField.value = todoListArray[index]
+        inputField.blur()
+        return
+      }
 
       todoListArray.splice(index, 1, inputField.value);
+      todoListArray = [...new Set(todoListArray)];
 
-      for(let i = 0; i < todoListArray.length; i++) {
-        if(inputField.value === todoListArray[i]) {
+      for (let i = 0; i < todoListArray.length; i++) {
+        if (inputField.value === todoListArray[i]) {
           checkedMap.set(`${todoListArray[i]}`, inputField.previousElementSibling.classList.contains('appearance'))
         } else {
           checkedMap.set(`${todoListArray[i]}`, checkedArray[i])
@@ -183,8 +226,9 @@ todoListDiv.addEventListener('click', function (e) {
   if (e.target.classList.contains(`task-status`)) {
     e.target.classList.toggle('appearance');
     e.target.classList.toggle('hide-appearance');
+    e.target.nextElementSibling.classList.toggle('line-through')
 
-    if(e.target.classList.contains('appearance')) {
+    if (e.target.classList.contains('appearance')) {
       checkedMap.set(`${e.target.nextElementSibling.value}`, true)
       remainingTasks.textContent = Number(remainingTasks.textContent) + 1
     } else {
@@ -193,7 +237,8 @@ todoListDiv.addEventListener('click', function (e) {
     }
 
     localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
-  }
+    location.reload()
+  } // end of complete/incomplete task
 
 }) // end of todoListDiv event listener
 
@@ -220,7 +265,6 @@ const changeTodoMode = (modeImg, color, bgColor, borderColor, showCactusTodo) =>
   const cactusTodo = document.getElementById('cactus-todo');
   cactusTodo.style.display = `${showCactusTodo}`
 
-  const cactusTodoCaption = document.getElementById('cactus-todo-caption');
   cactusTodoCaption.style.color = `${color}`
 }   // end of changeTodoMode() function
 
@@ -233,7 +277,7 @@ if (localStorage.length > 0) {
   remainingTasks.textContent = document.querySelectorAll('.appearance').length
 }
 
-function updateLocalStorage() {
+const updateLocalStorage = () => {
   localStorage.setItem('todoList', JSON.stringify(todoListArray));
   localStorage.setItem('checked', JSON.stringify(Array.from(checkedMap.entries())))
 }

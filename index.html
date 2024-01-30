@@ -2,10 +2,11 @@
 <html>
 
 <bds></bds>
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="index.css" />
-  <script src="index.js" defer></script>
+  <script src="index.js" type="module" defer></script>
   <title>Todo App Project</title>
 </head>
 
@@ -29,16 +30,19 @@
       </label>
 
       <div class="todo-list-div">
+        <p id="empty-todo-msg"> Empty task can't be entered. Please enter a task </p>
         <!-- <label for="todo" class="todo-list-label">
           <input type="text" name="todo" class="todo-list" value="A">
           <img src="./assets/icons/pencil.svg" alt="Pencil Icon" class="pencil-icon">
+          <img src="./assets/icons/pencil.svg" alt="Pencil Icon" class="pencil-icon">
           <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
         </label> -->
+
       </div>
       <p id="tasks"> <span id="remaining-tasks"> 0 </span> / <span id="total-tasks"> 0 </span> tasks completed</p>
       <figure>
         <img src="./assets/images/cactus.jpg" alt="Cactus todo image" id="cactus-todo">
-        <figcaption id="cactus-todo-caption"> There are no todos </figcaption>  
+        <figcaption id="cactus-todo-caption"> There are no todos </figcaption>
       </figure>
       </label>
 
