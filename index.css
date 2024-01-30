@@ -83,12 +83,6 @@ div.todo-card input.todo-list:hover{
     background-color: #37384c;
 }
 
-div.todo-card input[type="submit"] {
-    background-color: #93a9ff;
-    width: 20%;
-    height: 27px;
-    margin: -90px;
-}
 div.todo-card input[type="submit"]:hover {
     background-color: #fff;
     color: #93a9ff;
@@ -107,12 +101,7 @@ div.todo-card input[type="submit"] {
     height: 27px;
     margin: -90px;
 }
-div.todo-card input[type="submit"]:hover {
-    background-color: #fff;
-    color: #93a9ff;
-    cursor: pointer;
-    transition: all 1s;
-}
+
 
 div.todo-card img {
     position: absolute;
@@ -210,4 +199,24 @@ div.todo-list-div img.pencil-icon {
     div.todo-card {
         width: 340px;
     }
+
+    div.todo-card input[type="submit"] {
+        margin: -80px;
+    }
+    div.todo-card input.todo-list {
+        margin: 10px 10px;
+    }
+    div.todo-card input.todo {
+        width: 85%;
+    }
+    div.todo-card figure {
+        margin-left: 20px;
+    }
+    div.bg div.todo-mode p {
+        margin-left: 10%;
+    }
+    div.bg div.todo-mode img#mode {
+        margin-left: 85%;
+    }
+
 }
