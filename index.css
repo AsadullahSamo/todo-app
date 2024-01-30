@@ -191,6 +191,21 @@ div.todo-list-div img.pencil-icon {
     margin-right: 50px;
 }
 
+#empty-todo-msg {
+    font-family: Kanit-Regular;
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+    display: none;
+}
+
+.line-through {
+    text-decoration: line-through;
+    text-decoration-color: red;
+    text-decoration-thickness: 2px;
+}
+
 @media screen and (max-width: 440px) {
     div.todo-card {
         width: 340px;
