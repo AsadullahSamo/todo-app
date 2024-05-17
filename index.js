@@ -47,12 +47,6 @@ const createTodoList = (value) => {
     }, 1500)
     return
   }
-  // <label for= "todo" class= "todo-list-label" >
-  //   <input type="checkbox" name="task-status" id="task-status" disabled></input>
-  //   <input type="checkbox" name="task-status" id="task-status" disabled></input>
-  //   <input type="text" name="todo" class="todo-list" value="A">
-  //   <img src="./assets/icons/close.svg" class="close-icon" alt="Close icon">
-  // </label> 
 
 
   let inputValue = String(todo.value).trim();
